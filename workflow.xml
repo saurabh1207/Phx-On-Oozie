@@ -1,0 +1,26 @@
+<workflow-app name="Phoenix_Action" xmlns="uri:oozie:workflow:0.4">
+    <start to="Phoenix_Action"/>
+    <action name="Phoenix_Action">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>sqlline.SqlLine</main-class>
+            <arg>-d</arg>
+            <arg>org.apache.phoenix.jdbc.PhoenixDriver</arg>
+            <arg>-u</arg>
+            <arg>jdbc:phoenix:localhost:/hbase-unsecure</arg>
+            <arg>--fastConnect=true</arg>
+            <arg>--verbose=true</arg>
+            <arg>--isolation=TRANSACTION_READ_COMMITTED</arg>
+            <arg>--run=oozie.sql</arg>
+            <file>/user/hue/oozie.sql#oozie.sql</file>
+            <archive>/user/hue/phoenix-client.jar#phoenix-client.jar</archive>
+        </java>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
