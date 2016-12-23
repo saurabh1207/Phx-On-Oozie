@@ -7,6 +7,7 @@ E.g.:  /usr/hdp/current/phoenix-client/bin/sqlline.py <zoo-keeper-address>:2181:
 
 We can use JDBC drivers of Phoenix to execute JAVA action in Oozie and access Phoenix through Oozie workflow.
 Only external jar required to run JAVA action is : <b>phoenix-client.jar</b>
+You can get the jar from the bin folder of phoenix installation.
 
 In above workflow.xml, you can see that class sqlline.SqlLine is used in JAVA action.
 3 important arguments are passed to this class:
